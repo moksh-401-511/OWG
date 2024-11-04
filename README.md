@@ -1,4 +1,4 @@
-## OWG: Towards Open-World Grasping with Large Vision-Language Models
+# OWG: Towards Open-World Grasping with Large Vision-Language Models
 This is the official implementation for the paper "Towards Open-World Grasping with Large Vision-Language Models" (CoRL 2024).
 
 <p align="center"> <img src='media/fdsfad.drawio.png' align="center" > </p>
