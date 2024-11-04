@@ -33,7 +33,7 @@ export OPENAI_API_KEY=your_openai_key
 ```
 
 
-## Open-Ended Referring Segmentation in OCID
+## Open-Ended Grounding in OCID
 See [this example notebook](https://github.com/gtziafas/OWG/blob/main/notebooks/ocid_grounding.ipynb) for instructions on how to run inference and dataset evaluation in OCID-VLG scenes with the OWG grounder.
 
 
