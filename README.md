@@ -10,7 +10,7 @@ cluttered indoor scene datasets to showcase OWG’s robustness in grounding from
 
 ## Release
 
-- [Coming Soon]  Release a Pybullet environment that integrates OWG for online open-world grasping demos.
+- >[Coming Soon]  Release a Pybullet environment that integrates OWG for online open-world grasping demos.
 - [2024/11/04] 🔥 Release the source code and prompts for implementing all OWG components, as well as visualizations / evaluations in the OCID-VLG sub-set.
 
 ## Installation
