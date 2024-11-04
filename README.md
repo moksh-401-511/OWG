@@ -19,7 +19,7 @@ The code has been tested with `python3.8`. Create a virtual environment and inst
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
 ```
 
-Install local dependencies with
+Install local dependencies with 
 ```
 pip install -r requirements.txt
 ```
