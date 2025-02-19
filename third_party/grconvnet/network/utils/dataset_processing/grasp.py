@@ -226,7 +226,7 @@ class GraspRectangle:
         """
         :return: Rectangle center point
         """
-        return self.points.mean(axis=0).astype(np.int)
+        return self.points.mean(axis=0).astype(np.int32)
 
     @property
     def length(self):
@@ -332,8 +332,8 @@ class GraspRectangle:
         :param color: matplotlib color code (optional)
         """
         points = np.vstack((self.points, self.points[0]))
-        ax.plot(points[:, 1], points[:, 0], color=color, lineWidth=3)
-        ax.plot(self.center[1], self.center[0], 'o')
+        ax.plot(points[:, 1], points[:, 0], color=color)
+        # ax.plot(self.center[1], self.center[0], 'o')
         ax.legend(['score: {0:.2f}'.format(q)])
 
     def zoom(self, factor, center):
@@ -388,7 +388,7 @@ class Grasp:
                 [y2 + self.width / 2 * xo, x2 + self.width / 2 * yo],
                 [y1 + self.width / 2 * xo, x1 + self.width / 2 * yo],
             ]
-        ).astype(np.float))
+        ).astype(np.float64))
 
     def max_iou(self, grs):
         """
@@ -434,7 +434,8 @@ def detect_grasps(q_img, ang_img, width_img=None, no_grasps=1):
     """
     
     #Origional min distance=10, threshold abs=0.02
-    local_max = peak_local_max(q_img, min_distance=1, threshold_abs=0.6, num_peaks=no_grasps)
+    print(q_img.shape)
+    local_max = peak_local_max(q_img, min_distance=1, threshold_abs=0.4, num_peaks=no_grasps)
 
     grasps = []
     for grasp_point_array in local_max:
@@ -449,5 +450,4 @@ def detect_grasps(q_img, ang_img, width_img=None, no_grasps=1):
             g.width = g.length / 2
 
         grasps.append(g)
-
     return grasps

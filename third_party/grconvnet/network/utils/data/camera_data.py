@@ -33,8 +33,12 @@ class CameraData:
         right = (width + output_size) // 2
         bottom = (height + output_size) // 2
 
-        self.bottom_right = (bottom, right)
-        self.top_left = (top, left)
+        # self.bottom_right = (bottom, right)
+        # self.top_left = (top, left)
+        self.bottom_right = (height, width)
+        self.top_left = (0, 0)
+        print("self.bottom_right", self.bottom_right)
+        print("self.top_left", self.top_left)
 
     @staticmethod
     def numpy_to_torch(s):

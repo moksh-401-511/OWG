@@ -9,14 +9,17 @@ import torch
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import sys
+import cv2
+from datetime import datetime
 
 DEPTH_RADIUS = 1
 IMG_SIZE = 224
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+sys.path.append("/home/moksh/foundation_models/robotic-grasping/")
 
-
-class GraspGenerator:
+class   GraspGenerator:
     IMG_ROTATION = -np.pi * 0.5
     CAM_ROTATION = 0
     PIX_CONVERSION = 277
@@ -26,7 +29,7 @@ class GraspGenerator:
     def __init__(self, net_path, camera, depth_radius, fig, IMG_WIDTH=224, network='GR_ConvNet', device='cpu'):
 
         cwd = os.getcwd()
-        os.chdir(f'./third_party/grconvnet/checkpoints/{network}')
+        # os.chdir(f'./third_party/grconvnet/checkpoints/{network}')
         self.net = torch.load(net_path,  map_location=device)
         self.device = get_device(force_cpu=True if device == 'cpu' else False)
         os.chdir(cwd)
@@ -133,8 +136,11 @@ class GraspGenerator:
         if (self.network == 'GR_ConvNet'):
             ##### GR-ConvNet #####
             depth = np.expand_dims(np.array(depth), axis=2)
-            img_data = CameraData(width=self.IMG_WIDTH, height=self.IMG_WIDTH)
+            # img_data = CameraData(width=self.IMG_WIDTH, height=self.IMG_WIDTH)
+            img_data = CameraData(width=1280, height=720, output_size=720)
             x, depth_img, rgb_img = img_data.get_data(rgb=rgb, depth=depth)
+            print("x", type(x), x)
+            print(x.shape)
         else:
             print("The selected network has not been implemented yet -- please choose another network!")
             exit() 
@@ -146,6 +152,8 @@ class GraspGenerator:
                 ##### GR-ConvNet #####
                 pred = self.net.predict(xc)
                 # print (pred)
+                print("pred", type(pred), pred)
+                print(pred["cos"].shape)
                 pixels_max_grasp = int(self.MAX_GRASP * self.PIX_CONVERSION)
                 q_img, ang_img, width_img = self.post_process_output(pred['pos'],
                                                                 pred['cos'],
@@ -158,13 +166,14 @@ class GraspGenerator:
         save_name = None
         if show_output:
             #fig = plt.figure(figsize=(10, 10))
-            im_bgr = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
+            # im_bgr = cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
+            print("rgb_img shape:", rgb_img.shape)
             plot = plot_results(self.fig,
-                                rgb_img=im_bgr,
+                                rgb_img=rgb,
                                 grasp_q_img=q_img,
                                 grasp_angle_img=ang_img,
                                 depth_img=depth,
-                                no_grasps=3,
+                                no_grasps=n_grasps,
                                 grasp_width_img=width_img)
 
             if not os.path.exists('network_output'):
@@ -173,6 +182,7 @@ class GraspGenerator:
             save_name = 'network_output/{}'.format(time)
             plot.savefig(save_name + '.png')
             plot.clf()
+
 
         grasps = detect_grasps(q_img, ang_img, width_img=width_img, no_grasps=n_grasps)
         return grasps, save_name

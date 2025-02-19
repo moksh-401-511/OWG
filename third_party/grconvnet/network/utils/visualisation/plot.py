@@ -4,7 +4,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 
-from network.utils.dataset_processing.grasp import detect_grasps
+from third_party.grconvnet.network.utils.dataset_processing.grasp import detect_grasps
 
 warnings.filterwarnings("ignore")
 

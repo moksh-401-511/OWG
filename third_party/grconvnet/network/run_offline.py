@@ -6,11 +6,11 @@ import numpy as np
 import torch.utils.data
 from PIL import Image
 
-from network.hardware.device import get_device
-from network.inference.post_process import post_process_output
-from network.utils.data.camera_data import CameraData
-from network.utils.visualisation.plot import plot_results, save_results
-from network.utils.dataset_processing.grasp import detect_grasps
+from third_party.grconvnet.network.hardware.device import get_device
+from third_party.grconvnet.network.inference.post_process import post_process_output
+from third_party.grconvnet.network.utils.data.camera_data import CameraData
+from third_party.grconvnet.network.utils.visualisation.plot import plot_results, save_results
+from third_party.grconvnet.network.utils.dataset_processing.grasp import detect_grasps
 
 logging.basicConfig(level=logging.INFO)
 
